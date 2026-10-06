@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Order Tracking Finder",
+  "version": "0.1.0",
+  "description": "Finds carrier tracking numbers on eBay and Amazon order pages, links them to the carrier and exports them as CSV.",
+  "permissions": ["storage", "clipboardWrite"],
+  "host_permissions": [
+    "*://*.ebay.com/*", "*://*.ebay.co.uk/*", "*://*.ebay.de/*",
+    "*://*.amazon.com/*", "*://*.amazon.co.uk/*", "*://*.amazon.de/*"
+  ],
+  "background": { "service_worker": "src/background.js" },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.ebay.com/*", "*://*.ebay.co.uk/*", "*://*.ebay.de/*",
+        "*://*.amazon.com/*", "*://*.amazon.co.uk/*", "*://*.amazon.de/*"
+      ],
+      "js": ["src/carriers.js", "src/content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": { "default_popup": "src/popup.html", "default_title": "Order tracking numbers" }
+}
